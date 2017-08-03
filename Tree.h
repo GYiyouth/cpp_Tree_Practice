@@ -18,10 +18,32 @@ private:
     Node<T>* root = nullptr;
     //回调函数，在遍历时可以做一些事情
     TCallBack<T>* callBack = nullptr;
+    //回调函数
+    T& (* fCallBack)(T& data);
 protected:
 public:
 
-
+    //前序遍历,递归版本
+    virtual void preTraversal(Node<T>* node){
+        if (node != nullptr){
+            if (callBack != nullptr)
+                callBack->onShowTime(node->getDataNode());
+            if (fCallBack!= nullptr)
+                fCallBack(node->getDataNode());
+            preTraversal(node->getLeftPoint());
+            preTraversal(node->getRightPoint());
+        } else{
+            return;
+        }
+    }
+    //设置面向对象的回调成员变量
+    void setCallBack(TCallBack<T> *callBack) {
+        this -> callBack = callBack;
+    }
+    //设置面向过程的回调函数
+    void setFCallBack(T &(*fCallBack)(T &)) {
+        Tree::fCallBack = fCallBack;
+    }
 
     virtual Node<T> *getRoot() const {
         return root;
@@ -31,21 +53,6 @@ public:
         this -> root = root;
     }
 
-    //前序遍历
-    virtual void preTraversal(Node<T>* node){
-        if (node != nullptr){
-            callBack->onShowTime(node->getDataNode());
-            preTraversal(node->getLeftPoint());
-            preTraversal(node->getRightPoint());
-        } else{
-            return;
-        }
-    }
-
-    //设置回调成员变量
-    void setCallBack(TCallBack<T> *callBack) {
-        this -> callBack = callBack;
-    }
 };
 
 

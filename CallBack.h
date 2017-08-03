@@ -19,7 +19,7 @@ public:
 template <class T>
 class TCallBack{
 public:
-    virtual void onShowTime(T& data) const = 0;
+    virtual T& onShowTime(T& data) const = 0;
 };
 
 #endif //TREE_CALLBACK_H
