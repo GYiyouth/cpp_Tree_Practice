@@ -20,11 +20,51 @@ template <class T>
 T& onPointShow(T& data){
     cout << "function pointer : " << data << endl;
 }
+
+//把一个数组变成二叉查找树
+void initSearchTree(int* array, int length, Tree<int>& tree){
+    if (length == 0){
+        tree.setRoot(nullptr);
+        return;
+    }
+    Node<int>* node = new Node<int>(array[0]);
+    Node<int>* parent = nullptr;
+    bool isLeft = true;
+    tree.setRoot(node);
+    for (int i = 1; i < length; ++i) {
+        node = tree.getRoot();
+        while (node){
+            parent = node;
+            if (array[i] <= node->getDataNode()){
+                node = node->getLeftPoint();
+                isLeft = true;
+            } else if (array[i] > node->getDataNode()){
+                    node = node->getRightPoint();
+                    isLeft = false;
+            }
+        }
+        node = new Node<int>(array[i]);
+        if (isLeft){
+            parent->setLeftPoint(node);
+        } else {
+            parent->setRightPoint(node);
+        }
+    }
+}
+
+
 //使用实例
 void treeTest(){
     int a = 1;
     //树
     auto tree = new Tree<int>();
+    int array[9]= {5,9,2,8,4,7,1,3,6};
+    initSearchTree(array, 8, * tree);
+    //设置函数指针
+    tree->setFCallBack(onPointShow);
+    tree->levelTraversal();
+    return;
+
     //根节点
     auto root = new Node<int>(a);
     //做2个孩子
