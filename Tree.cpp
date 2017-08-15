@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include "Tree.h"
+#include "SearchTree.h"
 using namespace std;
 
 //callback in oop
@@ -57,12 +58,15 @@ void initSearchTree(int* array, int length, Tree<int>& tree){
 void treeTest(){
     int a = 1;
     //树
-    auto tree = new Tree<int>();
     int array[9]= {5,9,2,8,4,7,1,3,6};
-    initSearchTree(array, 8, * tree);
+    auto tree = new SearchTree(array, sizeof(array)/ sizeof(array[0]));
     //设置函数指针
     tree->setFCallBack(onPointShow);
-    tree->levelTraversal();
+    tree->midTraversal();
+    int temp = 9;
+    Node<int>* node = tree->find(temp);
+    cout << (tree->deleteValue(temp) == node) << endl;
+    tree->midTraversal();
     return;
 
     //根节点

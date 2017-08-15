@@ -33,6 +33,7 @@ private:
 protected:
 public:
 
+    Tree() {};
 
 
 
